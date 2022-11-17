@@ -1,3 +1,4 @@
+import itertools
 
 header = ["level", "lang", "tweets", "phd", "interviewed_well"]
 table = [
@@ -102,3 +103,54 @@ def compute_rule_interestingness(rule, table):
 for rule in [rule1, rule5]:
     compute_rule_interestingness(rule, table)
     print(rule)
+
+# set theory basics and implementation in python
+# set: an unordered collection with no duplicates
+# there is a built in set type
+transaction = ["chocolate", "grahams", "chocolate", "marshmallows"]
+transaction_set = set(transaction)
+print("set:", transaction_set)
+# note: duplicate is gone and order is lost
+# note: there is a part of apriori that requires order
+
+# A union B: the set of all items in A or B or both
+# A intersect B: the of all items in both A and B
+# apriori needs union()
+# transaction_set.union()
+# or...
+# with lists
+# example: we have a set (list) LHS and a set (list) RHS of a rule
+# union is sorted(LHS + RHS)
+# LHS intersect RHS = 0 (empty set)
+# there won't be any duplicates with this union
+
+# A is a subset of B if all elements in A are also in B
+# set has issubset()
+# or...
+# with lists
+# check_row_match(A, B) returns 1 if A is a subset of B, 0 otherwise
+
+# powerset of A: the set of all possible subsets of A including
+# 0 (empty set) and A itself
+# how could we calculate the powerset of transaction?
+transaction = sorted(list(transaction_set))
+print("list:", transaction)
+# lets use the combinations() function from itertools
+powerset = []
+for i in range(len(transaction) + 1):
+    powerset.extend(itertools.combinations(transaction, i))
+print("powerset:", powerset)
+
+# intro to market basket analysis (MBA)
+# associations between products purchased together
+# example
+# IF {"chocolate=true", "grahams=true"} THEN {"marshmallows=true"}
+# we are only interested in products bought together
+# not products not bought
+# e.g. =true, not the =false
+# shorthand... drop =true
+# IF {"chocolate", "grahams"} THEN {"marshmallows"}
+# {"chocolate", "grahams"} -> {"marshmallows"}
+# terminology
+# each row in our dataset is a "transaction" (AKA "itemset")
+# apriori lab time!
