@@ -92,5 +92,13 @@ def compute_rule_counts(rule, table):
 
     return Nleft, Nright, Nboth, Ntotal
 
-Nleft, Nright, Nboth, Ntotal = compute_rule_counts(rule1, table)
-print(Nleft, Nright, Nboth, Ntotal)
+def compute_rule_interestingness(rule, table):
+    Nleft, Nright, Nboth, Ntotal = compute_rule_counts(rule, table)
+    print(Nleft, Nright, Nboth, Ntotal)
+    rule["confidence"] = Nboth / Nleft
+    rule["support"] = Nboth / Ntotal
+    rule["completeness"] = Nboth / Nright
+
+for rule in [rule1, rule5]:
+    compute_rule_interestingness(rule, table)
+    print(rule)
