@@ -154,3 +154,68 @@ print("powerset:", powerset)
 # terminology
 # each row in our dataset is a "transaction" (AKA "itemset")
 # apriori lab time!
+
+# PA8 starter code
+transactions = [
+ ["b", "c", "m"],
+ ["b", "c", "e", "m", "s"],
+ ["b"],
+ ["c", "e", "s"],
+ ["c"],
+ ["b", "c", "s"],
+ ["c", "e", "s"],
+ ["c", "e"]
+]
+
+# NOTE: apriori lab task #1: find the set I
+def compute_unique_values(table):
+    unique = set()
+    for row in table:
+        for value in row: 
+            unique.add(value)
+    return sorted(list(unique))
+
+transactions_I = compute_unique_values(transactions)
+print(transactions_I)
+interview_I = compute_unique_values(table)
+print(interview_I)
+
+# NOTE: apriori algorithm step 4 prune step: exame all susbets of c with k - 1 elements
+def compute_k_minus_1_subsets(itemset):
+    # or use itertools.combinations()
+    subsets = []
+    for i in range(len(itemset)):
+        subsets.append(itemset[:i] + itemset[i + 1:])
+    return subsets
+
+# NOTE: apriori lab task #4/5: generate confidenet rules using supported itemsets
+def generate_apriori_rules(supported_itemsets, table, minconf):
+    rules = []
+    # for each itemset S in supported_itemsets
+    # generate the 1 term RHSs and the corresponding LHSs
+    # check confidence >= minconf => append to rules
+    # move on to the 2 term RHS... len(S)-1 term RHS...
+    return rules 
+
+# NOTE: apriori lab task #3: find supported itemsets
+def apriori(table, minsup, minconf):
+    # goal is to generate and return supported and confident rules
+    supported_itemsets = []
+    # TODO: finish apriori...
+    # step 1. generate L1 supported itemsets of cardinality 1
+    # to do this, use I
+    I = compute_unique_values(table)
+    # TODO: check support of singletons in L1!!
+    # step 2. k = 2
+    k = 2
+    # TODO: step 3. while loop... while(Lkminus1 is not empty)
+    # TODO: steps 4., 5., 6., ...
+
+    rules = generate_apriori_rules(supported_itemsets, table, minconf)
+    return rules 
+
+k2_subsets = compute_k_minus_1_subsets(["c", "e", "s"])
+print(k2_subsets) # [[c, e], [c, s], [e, s]]
+
+rules = apriori(transactions, 0.25, 0.8)
+print(rules) # TODO: check against your hand trace from apriori lab tasks #4/5
